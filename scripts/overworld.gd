@@ -9,6 +9,7 @@ const DUNGEON_ENTRANCE_SCENE := preload("res://scenes/actors/DungeonEntrance.tsc
 @onready var zombies_node: Node2D = $Zombies
 @onready var items_node: Node2D = $Items
 @onready var turn_radius_drawer: Node2D = $TurnRadiusDrawer
+@onready var camera: Camera2D = $Camera2D
 
 @onready var turn_label: Label = $CanvasLayer/HUD/TurnLabel
 @onready var end_turn_button: Button = $CanvasLayer/HUD/EndTurnButton
@@ -40,10 +41,13 @@ var combat_mode: String = ""
 var rng := RandomNumberGenerator.new()
 var zombie_cap: int = 5
 var map_min: Vector2 = Vector2(100, 100)
-var map_max: Vector2 = Vector2(900, 700)
+var map_max: Vector2 = Vector2(1800, 1400)
+
+var camera_follow_speed: float = 6.0
 
 func _ready() -> void:
-	GameData.build_players()
+	if GameData.players.is_empty():
+		GameData.build_players()
 	_spawn_players()
 	_spawn_test_zombies()
 	_spawn_test_items()
@@ -61,6 +65,18 @@ func _ready() -> void:
 
 func _on_info_close_pressed() -> void:
 	info_panel.visible = false
+
+func _update_camera_follow(delta: float) -> void:
+	if players.is_empty():
+		return
+
+	var current_player = players[current_player_index]
+	if current_player == null or not is_instance_valid(current_player):
+		return
+	if not current_player.visible:
+		return
+
+	camera.global_position = camera.global_position.lerp(current_player.global_position, delta * camera_follow_speed)
 
 func _spawn_players() -> void:
 	var spawn_positions := [
@@ -81,9 +97,9 @@ func _spawn_players() -> void:
 
 func _spawn_test_zombies() -> void:
 	var zombie_positions := [
-		Vector2(300, 200),
-		Vector2(325, 210),
-		Vector2(500, 300)
+		Vector2(900, 350),
+		Vector2(980, 380),
+		Vector2(1300, 800)
 	]
 
 	for i in range(zombie_positions.size()):
@@ -99,8 +115,8 @@ func _spawn_test_zombies() -> void:
 
 func _spawn_test_dungeon_entrances() -> void:
 	var entrance_data := [
-		{ "pos": Vector2(600, 200), "id": "dungeon_1", "cost": 10 },
-		{ "pos": Vector2(700, 450), "id": "dungeon_2", "cost": 20 }
+		{ "pos": Vector2(1400, 300), "id": "dungeon_1", "cost": 10 },
+		{ "pos": Vector2(1500, 1000), "id": "dungeon_2", "cost": 20 }
 	]
 
 	for i in range(entrance_data.size()):
@@ -151,9 +167,9 @@ func _enter_dungeon(dungeon_id: String) -> void:
 
 func _spawn_test_items() -> void:
 	var item_data := [
-		{ "pos": Vector2(350, 200), "type": "hp" },
-		{ "pos": Vector2(450, 400), "type": "radius" },
-		{ "pos": Vector2(250, 300), "type": "hp" }
+		{ "pos": Vector2(800, 300), "type": "hp" },
+		{ "pos": Vector2(1100, 700), "type": "radius" },
+		{ "pos": Vector2(500, 900), "type": "hp" }
 	]
 
 	for i in range(item_data.size()):
@@ -167,7 +183,7 @@ func _spawn_test_items() -> void:
 
 		items.append(item_instance)
 
-func _start_current_player_turn() -> void:
+func _start_current_player_turn() -> void:	
 	for i in range(players.size()):
 		if players[i] != null:
 			players[i].end_turn()
@@ -185,6 +201,8 @@ func _start_current_player_turn() -> void:
 		return
 
 	var current_player = players[current_player_index]
+	camera.global_position = current_player.global_position
+
 	current_player.start_turn()
 
 	turn_radius_drawer.target_player = current_player
@@ -213,9 +231,8 @@ func _refresh_turn_label() -> void:
 func _process_global_turn_end() -> void:
 	GameData.global_turn += 1
 	print("Global Turn %d" % GameData.global_turn)
-
+	
 	_respawn_zombies_up_to_cap()
-
 	if GameData.global_turn % 3 == 0:
 		_respawn_items()
 
@@ -325,7 +342,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			var current_player = players[current_player_index]
-			current_player.try_move_to(event.position)
+			current_player.try_move_to(get_global_mouse_position())
 
 func _on_item_body_entered(body: Node2D, item: Area2D) -> void:
 	if combat_open:
@@ -386,6 +403,8 @@ func _get_human_player_touched_by(attacker) -> Node:
 	return null
 
 func _process(delta: float) -> void:
+	_update_camera_follow(delta)
+
 	if combat_open:
 		return
 

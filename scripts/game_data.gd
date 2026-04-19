@@ -17,7 +17,7 @@ func build_players() -> void:
 			"character_id": selected_characters[i],
 			"max_hp": 10,
 			"hp": 10,
-			"move_radius": 150.0,
+			"move_radius": 450.0,
 			"money": 0
 		})
 		

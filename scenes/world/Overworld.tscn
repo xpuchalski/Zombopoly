@@ -12,6 +12,11 @@ script = ExtResource("1_flqmn")
 
 [node name="Items" type="Node2D" parent="." unique_id=439870938]
 
+[node name="TurnRadiusDrawer" type="Node2D" parent="." unique_id=1107590906]
+script = ExtResource("2_r7fdj")
+
+[node name="DungeonEntrances" type="Node2D" parent="." unique_id=1427861545]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1933010425]
 
 [node name="HUD" type="Control" parent="CanvasLayer" unique_id=2047690858]
@@ -34,8 +39,8 @@ text = "End Turn"
 [node name="CombatPanel" type="Panel" parent="CanvasLayer/HUD" unique_id=975561448]
 visible = false
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 2000.0
+offset_bottom = 2000.0
 
 [node name="CombatLabel" type="Label" parent="CanvasLayer/HUD/CombatPanel" unique_id=539613412]
 layout_mode = 0
@@ -78,7 +83,4 @@ offset_right = 8.0
 offset_bottom = 8.0
 text = "Close"
 
-[node name="TurnRadiusDrawer" type="Node2D" parent="." unique_id=1107590906]
-script = ExtResource("2_r7fdj")
-
-[node name="DungeonEntrances" type="Node2D" parent="." unique_id=1427861545]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1753654781]

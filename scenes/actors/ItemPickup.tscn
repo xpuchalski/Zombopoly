@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bd00g8odrw3yu" path="res://scripts/item_pickup.gd" id="1_8ygyj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u443e"]
-radius = 16.0
+radius = 60.0
 
 [node name="ItemPickup" type="Area2D" unique_id=1584540958]
 script = ExtResource("1_8ygyj")
@@ -12,5 +12,6 @@ script = ExtResource("1_8ygyj")
 shape = SubResource("CircleShape2D_u443e")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=656665116]
+scale = Vector2(3, 3)
 color = Color(1, 1, 0, 1)
 polygon = PackedVector2Array(0, 24, -24, 0, 0, -24, 24, 0)

@@ -1,9 +1,21 @@
 extends CharacterBody2D
 
+const CHARACTER_TEXTURES := {
+	1: preload("res://assets/characters/1.png"),
+	2: preload("res://assets/characters/2.png"),
+	3: preload("res://assets/characters/3.png"),
+	4: preload("res://assets/characters/4.png"),
+	5: preload("res://assets/characters/5.png"),
+	6: preload("res://assets/characters/6.png"),
+	7: preload("res://assets/characters/7.png"),
+	8: preload("res://assets/characters/8.png"),
+	9: preload("res://assets/characters/9.png")
+}
+
 var player_id: int = 0
 var character_id: int = 0
 
-var move_radius: float = 150.0
+var move_radius: float = 300.0
 var hp: int = 10
 var max_hp: int = 10
 var money: int = 0
@@ -13,6 +25,7 @@ var is_zombified: bool = false
 var movement_locked: bool = false
 
 var zombie_move_radius_bonus: float = 100.0
+var base_collision_radius: float = 30.0
 
 var turn_origin: Vector2 = Vector2.ZERO
 var target_position: Vector2 = Vector2.ZERO
@@ -26,16 +39,28 @@ var idle_pulse_amount: float = 0.03
 
 var move_tilt_speed: float = TAU
 var move_tilt_amount_degrees: float = 15.0
+var base_sprite_scale: Vector2 = Vector2(0.25, 0.25)
 
 var return_speed: float = 8.0
 var stretch_return_speed: float = 6.0
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 func _ready() -> void:
 	target_position = global_position
+
+	var shape := collision_shape.shape as CircleShape2D
+	if shape != null:
+		base_collision_radius = shape.radius
+
 	_update_visual()
 	_reset_visual_pose()
+
+func _apply_character_sprite() -> void:
+	if CHARACTER_TEXTURES.has(character_id):
+		sprite.texture = CHARACTER_TEXTURES[character_id]
+		sprite.scale = base_sprite_scale
 
 func setup_from_data(data: Dictionary) -> void:
 	player_id = data["player_id"]
@@ -44,6 +69,8 @@ func setup_from_data(data: Dictionary) -> void:
 	hp = data["hp"]
 	max_hp = data["max_hp"]
 	money = data["money"]
+
+	_apply_character_sprite()
 
 func snap_to_position(pos: Vector2) -> void:
 	global_position = pos
@@ -68,8 +95,17 @@ func try_move_to(world_pos: Vector2) -> void:
 	if movement_locked:
 		return
 
-	if world_pos.distance_to(turn_origin) <= move_radius:
+	var usable_radius = move_radius - base_collision_radius
+	if usable_radius < 0.0:
+		usable_radius = 0.0
+
+	var offset = world_pos - turn_origin
+	var distance = offset.length()
+
+	if distance <= usable_radius:
 		target_position = world_pos
+	elif distance > 0.0:
+		target_position = turn_origin + offset.normalized() * usable_radius
 
 func _physics_process(delta: float) -> void:
 	var to_target := target_position - global_position
@@ -97,19 +133,22 @@ func _update_visual_animation(delta: float) -> void:
 
 		var target_rotation = sin(visual_time * move_tilt_speed) * deg_to_rad(move_tilt_amount_degrees)
 		sprite.rotation = lerp(sprite.rotation, target_rotation, delta * return_speed)
-
-		var target_scale = Vector2.ONE
+		
+		var target_scale = base_sprite_scale
 		sprite.scale = sprite.scale.lerp(target_scale, delta * stretch_return_speed)
 	else:
 		var idle_scale_y = 1.0 + sin(visual_time * idle_pulse_speed) * idle_pulse_amount
-		var target_scale = Vector2(1.0, idle_scale_y)
+		var target_scale = Vector2(
+			base_sprite_scale.x,
+			base_sprite_scale.y * idle_scale_y
+		)
 
 		sprite.rotation = lerp(sprite.rotation, 0.0, delta * return_speed)
 		sprite.scale = sprite.scale.lerp(target_scale, delta * stretch_return_speed)
 
 func _reset_visual_pose() -> void:
 	sprite.rotation = 0.0
-	sprite.scale = Vector2.ONE
+	sprite.scale = base_sprite_scale
 
 func _update_visual() -> void:
 	if is_zombified:

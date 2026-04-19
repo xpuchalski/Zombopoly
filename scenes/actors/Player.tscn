@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://cr4arftaxn5q5"]
 
 [ext_resource type="Script" uid="uid://mf66bxpxm1ae" path="res://scripts/player.gd" id="1_xjuxa"]
-[ext_resource type="Texture2D" uid="uid://q7bwuwvniali" path="res://example.png" id="2_8iu4y"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8iu4y"]
-height = 60.0
+radius = 45.0
+height = 200.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1493501094]
 script = ExtResource("1_xjuxa")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1942832401]
-texture = ExtResource("2_8iu4y")
+scale = Vector2(0.25, 0.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=551515641]
 shape = SubResource("CapsuleShape2D_8iu4y")
