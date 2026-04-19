@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://fw7ae8heqv6x"]
+
+[ext_resource type="Script" uid="uid://cxwynlqpd8hng" path="res://scripts/dungeon_test.gd" id="1_dcork"]
+
+[node name="DungeonTest" type="Control" unique_id=759103700]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_dcork")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1703665594]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1628042784]
+layout_mode = 2
+
+[node name="DungeonLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1210693809]
+layout_mode = 2
+text = "Return to overworld
+"
+
+[node name="ReturnButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=514039434]
+layout_mode = 2
+text = "Button
+"

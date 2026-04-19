@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cg10784tdlhdx"]
+
+[ext_resource type="Script" uid="uid://cap2nns4o2fh" path="res://scripts/character_select.gd" id="1_i3jiv"]
+
+[node name="CharacterSelect_tscn" type="Control" unique_id=1325354835]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_i3jiv")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1461202037]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1728451845]
+layout_mode = 2
+
+[node name="InfoLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=48197507]
+layout_mode = 2
+text = "Select Character"
+
+[node name="Character1Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1046659545]
+layout_mode = 2
+text = "character 1"
+
+[node name="Character2Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=912255451]
+layout_mode = 2
+text = "character 2"
+
+[node name="Character3Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1597823995]
+layout_mode = 2
+text = "character 3"
+
+[node name="Character4Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=55169007]
+layout_mode = 2
+text = "character 4"
+
+[node name="Character5Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1076968656]
+layout_mode = 2
+text = "character 5"
+
+[node name="Character6Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=120161504]
+layout_mode = 2
+text = "character 6"
+
+[node name="Character7Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2038812184]
+layout_mode = 2
+text = "character 7"
+
+[node name="Character8Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2101092909]
+layout_mode = 2
+text = "character 8"
+
+[node name="Character9Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=273345110]
+layout_mode = 2
+text = "character 9"
+
+[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1463172259]
+layout_mode = 2
+text = "character 9"

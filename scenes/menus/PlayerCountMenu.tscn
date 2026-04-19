@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://htpjh24hylci"]
+
+[ext_resource type="Script" uid="uid://di5tpf7qblfqk" path="res://scripts/player_count_menu.gd" id="1_p01fw"]
+
+[node name="PlayerCountMenu_tscn" type="Control" unique_id=896523908]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_p01fw")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1996437515]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=395349557]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=388620449]
+layout_mode = 2
+text = "Select Number of Players"
+
+[node name="OnePlayerButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1706224343]
+layout_mode = 2
+text = "1"
+
+[node name="TwoPlayerButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1190566206]
+layout_mode = 2
+text = "2"
+
+[node name="ThreePlayerButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1205827359]
+layout_mode = 2
+text = "3"
+
+[node name="FourPlayerButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1717417580]
+layout_mode = 2
+text = "4"
+
+[node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=93987657]
+layout_mode = 2
+text = "Back"
