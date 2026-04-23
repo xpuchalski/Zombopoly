@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://df7xjko3ncwvo" path="res://scripts/dungeon_entrance.gd" id="1_eqvxa"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_eq25c"]
-radius = 80.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqvxa"]
+size = Vector2(150, 40)
 
 [node name="DungeonEntrance" type="Area2D" unique_id=547965066]
 script = ExtResource("1_eqvxa")
@@ -11,7 +11,7 @@ script = ExtResource("1_eqvxa")
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=906356006]
 position = Vector2(9.536743e-07, 9.536743e-07)
 scale = Vector2(3.1666667, 3.1666667)
-polygon = PackedVector2Array(-24, -8, -24, 8, -8, 24, 8, 24, 24, 8, 24, -8, 8, -24, -8, -24)
+polygon = PackedVector2Array(-24, -8, -24, 8, 24, 8, 24, -8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1809708666]
-shape = SubResource("CircleShape2D_eq25c")
+shape = SubResource("RectangleShape2D_eqvxa")

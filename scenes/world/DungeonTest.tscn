@@ -2,25 +2,61 @@
 
 [ext_resource type="Script" uid="uid://cxwynlqpd8hng" path="res://scripts/dungeon_test.gd" id="1_dcork"]
 
-[node name="DungeonTest" type="Control" unique_id=759103700]
-layout_mode = 3
-anchors_preset = 0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gy243"]
+size = Vector2(1500, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wue5f"]
+size = Vector2(1500, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtwem"]
+size = Vector2(20, 1500)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2g7l"]
+size = Vector2(20, 1500)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dcork"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3j82v"]
+size = Vector2(100, 20)
+
+[node name="Dungeon" type="Node2D" unique_id=1524289208]
 script = ExtResource("1_dcork")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1703665594]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Obstacles" type="StaticBody2D" parent="." unique_id=1792184849]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1628042784]
-layout_mode = 2
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles" unique_id=778666520]
+position = Vector2(0, 750)
+shape = SubResource("RectangleShape2D_gy243")
 
-[node name="DungeonLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1210693809]
-layout_mode = 2
-text = "Return to overworld
-"
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Obstacles" unique_id=1570008565]
+position = Vector2(0, -750)
+shape = SubResource("RectangleShape2D_wue5f")
 
-[node name="ReturnButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=514039434]
-layout_mode = 2
-text = "Button
-"
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Obstacles" unique_id=1377084128]
+position = Vector2(-750, 0)
+shape = SubResource("RectangleShape2D_gtwem")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Obstacles" unique_id=717890748]
+position = Vector2(750, 0)
+shape = SubResource("RectangleShape2D_t2g7l")
+
+[node name="ItemSpawns" type="Node2D" parent="." unique_id=722591898]
+
+[node name="Items" type="Node2D" parent="." unique_id=609112543]
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1880736956]
+
+[node name="BossSpawn" type="Node2D" parent="." unique_id=1001896254]
+
+[node name="Entrance" type="Area2D" parent="." unique_id=1642688114]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance" unique_id=1313165015]
+position = Vector2(-100, 730)
+shape = SubResource("RectangleShape2D_dcork")
+
+[node name="Exit" type="Area2D" parent="." unique_id=1149414033]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit" unique_id=1940677637]
+position = Vector2(20, 730)
+shape = SubResource("RectangleShape2D_3j82v")

@@ -1,13 +1,21 @@
 extends Area2D
 
-var item_id: int = 0
-var item_type: String = ""
+const RARITY_COLORS := {
+	"common": Color(0.85, 0.85, 0.85),
+	"uncommon": Color(0.35, 0.9, 0.45),
+	"rare": Color(0.3, 0.65, 1.0),
+	"epic": Color(0.8, 0.45, 1.0),
+	"legendary": Color(1.0, 0.72, 0.2)
+}
+
+var item_id: String = ""
+var item_data: Dictionary = {}
 var collected: bool = false
 var spawn_position: Vector2 = Vector2.ZERO
 
-func setup(id: int, type: String) -> void:
-	item_id = id
-	item_type = type
+func setup(new_item_id: String) -> void:
+	item_id = new_item_id
+	item_data = GameData.get_item_data(item_id)
 	spawn_position = global_position
 	collected = false
 	visible = true
@@ -17,14 +25,7 @@ func setup(id: int, type: String) -> void:
 
 func _update_visual() -> void:
 	var polygon: Polygon2D = $Polygon2D
-
-	match item_type:
-		"hp":
-			polygon.color = Color(1.0, 0.8, 0.2)
-		"radius":
-			polygon.color = Color(0.3, 0.8, 1.0)
-		_:
-			polygon.color = Color(1.0, 1.0, 1.0)
+	polygon.color = RARITY_COLORS.get(item_data.get("rarity", "common"), Color.WHITE)
 
 func collect() -> void:
 	collected = true

@@ -4,13 +4,21 @@
 
 [node name="CharacterSelect_tscn" type="Control" unique_id=1325354835]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
 script = ExtResource("1_i3jiv")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1461202037]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.5
+offset_right = 63.5
+offset_bottom = 373.0
+grow_horizontal = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1728451845]
 layout_mode = 2
@@ -57,4 +65,49 @@ text = "character 9"
 
 [node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1463172259]
 layout_mode = 2
-text = "character 9"
+text = "Back"
+
+[node name="Portraits" type="Node" parent="." unique_id=1019820087]
+
+[node name="P1Portrait" type="TextureRect" parent="Portraits" unique_id=1644488555]
+custom_minimum_size = Vector2(550, 360)
+offset_right = 550.0
+offset_bottom = 360.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="P2Portrait" type="TextureRect" parent="Portraits" unique_id=17030935]
+custom_minimum_size = Vector2(550, 360)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -550.0
+offset_bottom = 360.0
+grow_horizontal = 0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="P3Portrait" type="TextureRect" parent="Portraits" unique_id=551276755]
+custom_minimum_size = Vector2(550, 360)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -360.0
+offset_right = 550.0
+grow_vertical = 0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="P4Portrait" type="TextureRect" parent="Portraits" unique_id=1974882408]
+custom_minimum_size = Vector2(550, 360)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -550.0
+offset_top = -360.0
+grow_horizontal = 0
+grow_vertical = 0
+expand_mode = 1
+stretch_mode = 5

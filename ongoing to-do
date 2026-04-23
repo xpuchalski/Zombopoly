@@ -1,0 +1,46 @@
+ongoing to-do
+
+- (done) make the camera zoom in and out with scroll wheel
+- (done) display turn order with a graphic at the bottom middle. (showing the portrait of each unit in the turn order, red if its in combat)
+- (done) when you leave a dungeon it shouldn't reset everything, and when you come out you should be at the dungeon entrance. 
+- (done) add dungeon functionality
+- (done) instead of the player being able to attack multiple times a turn in a combat turn, the player should be able to attack once and then the zombie attacks and the turn goes to the next player's movement turn.
+- (cancelled) if the player ends the turn with zombies in their radius they should attack the player
+- (cancelled) multiple zombies should be able to attack one person if they're in radius at the end of turn
+- (done) move the character selection buttons to the center of the screen 
+- (done) when you select a player character on the selection screen it will show that characters portrait in the top left for player 1, top right for player 2, bottom left for player 3, bottom right for player 4.
+- (done) during battle make the player portrait and zombie portrait render
+- (done) when players take damage make them move left and right and modulate their color to fade in and out of red 
+- (done) instead of the items being a set item they should pull from an item pool
+- (done) add character spesific abilities, 3 per character (+ run) attack, special attack, block.
+- (done) different zombies
+- add zombie sprites
+- (done) instead of respawn zombies every turn, respawn them every 3 turns. items 5 turns, bosses 10 turns.
+- (done) change spawn area of zombies to reflect new walkable area.
+- (done) spawn dungeons even farther away
+- (done) when going to a dungeon, flash a loading screen for a second to hide the teleport and initialization
+- (may not be do-able for me) allow multiple fights to happen at once
+- (done) change running away from a fight to spitting you out 100 units away from the battle in the opposite direction instead of at the edge of the radius
+- (done) change the in-battle pictures to use the portrait of the player not the sprite
+- (done) increase the size of the battle portraits
+- (done) instead of the player's base damage being in the actual attack, have it be a variable in the player
+- (done) make the generated objects in the dungeons much larger, and fewer
+- (done) prevent the objects generated in the dungeons from generating on or poking out of the boundaries
+- (done) increase walking speed and tilting animation speed by 1.5x
+- (done) change all combat participants are colored red on the turn-order-bar, not just zombies
+- the size of the map is currently 5000x5000, center is 0,0. dungeons are 1500x1500. this may need to be changed...
+- (done) add a confirm button at the bottom center of character select that becomes available once all the characters are selected. 
+- make sprites for the world
+- rework every character
+- rework every item
+- draw sprites for the zombies
+- draw a title screen
+- make an options screen
+- make a "how to play" screen 
+- make a tutorial level maybe
+- make an actual fucking win condition
+- revert character values from debug values
+- when a player enters or exits a dungeon end their turn
+- add an inventory button where it displays what items you have and what they do
+- add some functionality to the warehouse
+- 
