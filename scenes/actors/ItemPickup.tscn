@@ -11,7 +11,4 @@ script = ExtResource("1_8ygyj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=515126172]
 shape = SubResource("CircleShape2D_u443e")
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=656665116]
-scale = Vector2(3, 3)
-color = Color(1, 1, 0, 1)
-polygon = PackedVector2Array(0, 24, -24, 0, 0, -24, 24, 0)
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=146701969]

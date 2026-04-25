@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bgcty3el8suyt"]
+
+[ext_resource type="Script" uid="uid://m0ar7nbjssf0" path="res://scripts/warehouse_entrance.gd" id="1_45xw5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8l6m5"]
+size = Vector2(150, 40)
+
+[node name="WarehouseEntrance" type="Area2D" unique_id=872303371]
+script = ExtResource("1_45xw5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1651562920]
+shape = SubResource("RectangleShape2D_8l6m5")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=650583706]
+position = Vector2(0, 64)
+scale = Vector2(3.1666667, 3.1666667)
+color = Color(1, 0.7882353, 0, 0.45882353)
+polygon = PackedVector2Array(-10.105263, -2.5263157, -2.5263157, -2.5263157, 0, 15.157894, 2.5263157, -2.5263157, 10.105263, -2.5263157, 0, -10.105263)

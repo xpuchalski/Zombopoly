@@ -15,9 +15,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -63.5
-offset_right = 63.5
-offset_bottom = 373.0
+offset_left = -80.5
+offset_top = 50.0
+offset_right = 80.5
+offset_bottom = 423.0
 grow_horizontal = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1728451845]
@@ -29,39 +30,39 @@ text = "Select Character"
 
 [node name="Character1Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1046659545]
 layout_mode = 2
-text = "character 1"
+text = "Penny (medic)"
 
 [node name="Character2Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=912255451]
 layout_mode = 2
-text = "character 2"
+text = "Astrea (hunter)"
 
 [node name="Character3Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1597823995]
 layout_mode = 2
-text = "character 3"
+text = "Ember (arsonist)"
 
 [node name="Character4Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=55169007]
 layout_mode = 2
-text = "character 4"
+text = "Nova (engineer)"
 
 [node name="Character5Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1076968656]
 layout_mode = 2
-text = "character 5"
+text = "Rhea (fighter)"
 
 [node name="Character6Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=120161504]
 layout_mode = 2
-text = "character 6"
+text = "Hina (guard)"
 
 [node name="Character7Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2038812184]
 layout_mode = 2
-text = "character 7"
+text = "Jun (mechanic)"
 
 [node name="Character8Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2101092909]
 layout_mode = 2
-text = "character 8"
+text = "Vex (assassin)"
 
 [node name="Character9Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=273345110]
 layout_mode = 2
-text = "character 9"
+text = "Kyra (necromancer)"
 
 [node name="BackButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1463172259]
 layout_mode = 2

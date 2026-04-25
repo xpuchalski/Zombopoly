@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://ku5osgrk7eqs"]
+
+[ext_resource type="Script" uid="uid://ccehk5c86kvqk" path="res://scripts/warehouse.gd" id="1_s72i2"]
+[ext_resource type="Texture2D" uid="uid://dtpm3qcpna05t" path="res://assets/objects/winside.PNG" id="2_hx0gn"]
+[ext_resource type="Texture2D" uid="uid://dx5dngkmqjc2t" path="res://assets/objects/crate.PNG" id="3_1wuq0"]
+[ext_resource type="Texture2D" uid="uid://b1crn0cit2jc1" path="res://assets/objects/box.PNG" id="4_7hy5f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mcbdy"]
+size = Vector2(2126, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s72i2"]
+size = Vector2(2124, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hx0gn"]
+size = Vector2(20, 950)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_drvfe"]
+size = Vector2(20, 950)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3m4b2"]
+size = Vector2(189, 155)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hofqi"]
+size = Vector2(178, 155)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wuq0"]
+size = Vector2(100, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7hy5f"]
+size = Vector2(100, 20)
+
+[node name="Warehouse" type="Node2D" unique_id=1270781147]
+script = ExtResource("1_s72i2")
+
+[node name="Obstacles" type="StaticBody2D" parent="." unique_id=1139027419]
+
+[node name="TextureRect" type="TextureRect" parent="Obstacles" unique_id=1870223092]
+z_index = -1000
+offset_left = -1112.0
+offset_top = -335.0
+offset_right = 1147.7402
+offset_bottom = 869.0
+texture = ExtResource("2_hx0gn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles" unique_id=1737581357]
+position = Vector2(38, 750.5)
+shape = SubResource("RectangleShape2D_mcbdy")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Obstacles" unique_id=921572194]
+position = Vector2(39, 30)
+shape = SubResource("RectangleShape2D_s72i2")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Obstacles" unique_id=421035208]
+position = Vector2(-1020, 275)
+shape = SubResource("RectangleShape2D_hx0gn")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Obstacles" unique_id=544012129]
+position = Vector2(1097, 275)
+shape = SubResource("RectangleShape2D_drvfe")
+
+[node name="crate" type="Area2D" parent="Obstacles" unique_id=1566548156]
+position = Vector2(780, 83)
+
+[node name="TextureRect2" type="TextureRect" parent="Obstacles/crate" unique_id=1858500179]
+offset_right = 278.0
+offset_bottom = 318.0
+texture = ExtResource("3_1wuq0")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/crate" unique_id=509513112]
+position = Vector2(143.5, 201.5)
+shape = SubResource("RectangleShape2D_3m4b2")
+
+[node name="crate2" type="Area2D" parent="Obstacles" unique_id=1777361523]
+position = Vector2(588, 171)
+
+[node name="TextureRect2" type="TextureRect" parent="Obstacles/crate2" unique_id=123288675]
+offset_right = 278.0
+offset_bottom = 318.0
+texture = ExtResource("3_1wuq0")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/crate2" unique_id=920893625]
+position = Vector2(143.5, 201.5)
+shape = SubResource("RectangleShape2D_3m4b2")
+
+[node name="crate3" type="Area2D" parent="Obstacles" unique_id=1310871317]
+position = Vector2(588, 13)
+
+[node name="TextureRect2" type="TextureRect" parent="Obstacles/crate3" unique_id=694928007]
+offset_right = 278.0
+offset_bottom = 318.0
+texture = ExtResource("3_1wuq0")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/crate3" unique_id=218319220]
+position = Vector2(143.5, 201.5)
+shape = SubResource("RectangleShape2D_3m4b2")
+
+[node name="crate4" type="Area2D" parent="Obstacles" unique_id=483815575]
+position = Vector2(-490, 442)
+
+[node name="TextureRect2" type="TextureRect" parent="Obstacles/crate4" unique_id=1366077380]
+offset_right = 278.0
+offset_bottom = 318.0
+texture = ExtResource("3_1wuq0")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/crate4" unique_id=603826596]
+position = Vector2(143.5, 201.5)
+shape = SubResource("RectangleShape2D_3m4b2")
+
+[node name="box" type="Area2D" parent="Obstacles" unique_id=531402475]
+position = Vector2(-448, -49)
+
+[node name="TextureRect2" type="TextureRect" parent="Obstacles/box" unique_id=927046373]
+offset_left = -549.0
+offset_top = 104.0
+offset_right = -271.0
+offset_bottom = 422.0
+texture = ExtResource("4_7hy5f")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/box" unique_id=1743670364]
+position = Vector2(-421, 305.5)
+shape = SubResource("RectangleShape2D_hofqi")
+
+[node name="box2" type="Area2D" parent="Obstacles" unique_id=592812280]
+position = Vector2(-264, -48)
+
+[node name="TextureRect2" type="TextureRect" parent="Obstacles/box2" unique_id=1961123839]
+offset_left = -549.0
+offset_top = 104.0
+offset_right = -271.0
+offset_bottom = 422.0
+texture = ExtResource("4_7hy5f")
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/box2" unique_id=231428510]
+position = Vector2(-421, 305.5)
+shape = SubResource("RectangleShape2D_hofqi")
+
+[node name="Entrance" type="Area2D" parent="." unique_id=1008322939]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Entrance" unique_id=1286465]
+position = Vector2(-100, 730)
+shape = SubResource("RectangleShape2D_1wuq0")
+
+[node name="Exit" type="Area2D" parent="." unique_id=62356552]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit" unique_id=1671433826]
+position = Vector2(20, 730)
+shape = SubResource("RectangleShape2D_7hy5f")

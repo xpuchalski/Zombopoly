@@ -12,6 +12,7 @@ const GENERATED_OBSTACLE_COUNT := 5
 const GENERATED_ITEM_MARKER_COUNT := 4
 const GENERATED_ENEMY_COUNT := 3
 const ENTITY_BLOCK_DISTANCE := 110.0
+const BOTTOM_CENTER_EXCLUSION := Rect2(Vector2(-320.0, 220.0), Vector2(640.0, 530.0))
 
 var pending_dungeon_id: String = ""
 @onready var obstacles_node: StaticBody2D = $Obstacles
@@ -29,6 +30,7 @@ var dungeon_items: Array = []
 var dungeon_enemies: Array = []
 
 func _ready() -> void:
+	print_tree_pretty()
 	rng.randomize()
 	if exit_node != null and not exit_node.body_entered.is_connected(_on_exit_body_entered):
 		exit_node.body_entered.connect(_on_exit_body_entered)
@@ -83,19 +85,32 @@ func _generate_obstacles() -> void:
 		var local_pos = _find_open_local_position(size)
 		if local_pos == null:
 			continue
-		var obstacle := Node2D.new()
+
+		# Generated obstacles must be physics bodies.
+		# CollisionPolygon2D under plain Node2D will not block CharacterBody2D movement.
+		var obstacle := StaticBody2D.new()
 		obstacle.name = "GeneratedObstacle_%d" % i
+		obstacle.position = local_pos
 		obstacles_node.add_child(obstacle)
+
 		var half := size * 0.5
-		var polygon := PackedVector2Array([Vector2(-half.x,-half.y), Vector2(half.x,-half.y), Vector2(half.x,half.y), Vector2(-half.x,half.y)])
+		var polygon := PackedVector2Array([
+			Vector2(-half.x, -half.y),
+			Vector2(half.x, -half.y),
+			Vector2(half.x, half.y),
+			Vector2(-half.x, half.y)
+		])
+
 		var collision := CollisionPolygon2D.new()
+		collision.name = "CollisionPolygon2D"
 		collision.polygon = polygon
 		obstacle.add_child(collision)
+
 		var visual := Polygon2D.new()
+		visual.name = "Visual"
 		visual.polygon = polygon
-		visual.color = Color(0.18, 0.18, 0.22, 1.0)
+		visual.color = Color(0.516, 0.441, 0.29, 1.0)
 		obstacle.add_child(visual)
-		obstacle.position = local_pos
 
 func _generate_item_markers() -> void:
 	for i in range(GENERATED_ITEM_MARKER_COUNT):
@@ -140,6 +155,8 @@ func respawn_enemies_if_needed(active_players: Array = []) -> void:
 		dungeon_enemies.append(enemy_instance)
 
 func respawn_boss_if_needed() -> void:
+	if GameData.is_boss_defeated(dungeon_id):
+		return
 	for child in boss_spawn_node.get_children():
 		if child != null and is_instance_valid(child) and not child.is_dead():
 			return
@@ -147,6 +164,8 @@ func respawn_boss_if_needed() -> void:
 	boss_spawn_node.add_child(boss_instance)
 	boss_instance.position = Vector2.ZERO
 	boss_instance.setup(999, "boss")
+	boss_instance.set_meta("boss_id", dungeon_id)
+	boss_instance.set_meta("zombie_type", "boss")
 	boss_instance.body_entered.connect(_on_enemy_body_entered.bind(boss_instance))
 
 func _cleanup_enemy_arrays() -> void:
@@ -177,6 +196,8 @@ func _find_open_local_position(size_or_clearance, active_players: Array = []):
 	var half := size * 0.5
 	for _attempt in range(120):
 		var local_pos := Vector2(rng.randf_range(DUNGEON_MIN.x + half.x, DUNGEON_MAX.x - half.x), rng.randf_range(DUNGEON_MIN.y + half.y, DUNGEON_MAX.y - half.y))
+		if BOTTOM_CENTER_EXCLUSION.has_point(local_pos):
+			continue
 		if local_pos.distance_to(entrance_node.position) < 180.0 or local_pos.distance_to(exit_node.position) < 180.0 or local_pos.distance_to(boss_spawn_node.position) < 200.0:
 			continue
 		if _overlaps_generated_obstacle(local_pos, half.length()):
@@ -202,4 +223,4 @@ func _overlaps_existing_entities(local_pos: Vector2, clearance: float, active_pl
 	for player in active_players:
 		if player != null and is_instance_valid(player) and player.visible and player.global_position.distance_to(to_global(local_pos)) < clearance + ENTITY_BLOCK_DISTANCE:
 			return true
-	return false
+	return false	

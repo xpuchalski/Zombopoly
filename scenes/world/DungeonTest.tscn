@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://fw7ae8heqv6x"]
 
 [ext_resource type="Script" uid="uid://cxwynlqpd8hng" path="res://scripts/dungeon_test.gd" id="1_dcork"]
+[ext_resource type="Texture2D" uid="uid://bfm4y3dnfv3dw" path="res://assets/objects/inside.PNG" id="2_3j82v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gy243"]
 size = Vector2(1500, 20)
@@ -24,6 +25,15 @@ size = Vector2(100, 20)
 script = ExtResource("1_dcork")
 
 [node name="Obstacles" type="StaticBody2D" parent="." unique_id=1792184849]
+
+[node name="TextureRect" type="TextureRect" parent="Obstacles" unique_id=3229490]
+z_index = -1000
+z_as_relative = false
+offset_left = -874.0
+offset_top = -1237.0
+offset_right = 869.70483
+offset_bottom = 851.0
+texture = ExtResource("2_3j82v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles" unique_id=778666520]
 position = Vector2(0, 750)
