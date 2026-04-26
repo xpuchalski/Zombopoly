@@ -30,7 +30,6 @@ var dungeon_items: Array = []
 var dungeon_enemies: Array = []
 
 func _ready() -> void:
-	print_tree_pretty()
 	rng.randomize()
 	if exit_node != null and not exit_node.body_entered.is_connected(_on_exit_body_entered):
 		exit_node.body_entered.connect(_on_exit_body_entered)

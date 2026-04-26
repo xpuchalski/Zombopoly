@@ -51,11 +51,11 @@ ongoing to-do
 - (done) make the player be underneath something if its under its y axis value and above it if it is above it
 - (done) change it so that obstacles and enemies cannot spawn in the bottom center of the dungeons
 - (done) make zombies squash and stretch up and down a little bit like the players
-- make a running animation for each of the players chibis
-- make a hurt face for each of the players portaits for when they get hit
+- (cancelled) make a running animation for each of the players chibis
+- (cancelled) make a hurt face for each of the players portaits for when they get hit
 - make a "how to play" screen 
 - add an about the game section on the main menu where you can view the board game and get a note from me
 - add a lore button on the main menu where you can read the game's story
-- draw a title screen
+- (done) draw a title screen
 - make an options screen
 

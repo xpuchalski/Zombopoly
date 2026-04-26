@@ -22,6 +22,10 @@ const WAREHOUSE_INSTANCE_POSITION := Vector2(-10000.0, 0.0)
 const HEALING_AREA_RADIUS := 220.0
 const HEALING_AREA_HEAL_PERCENT := 0.35
 const ENCOUNTER_JOIN_RADIUS := 200.0
+const PVP_OVERLAP_DISTANCE := 72.0
+const DEPTH_Z_OFFSET := 1000
+const BACKGROUND_Z_INDEX := -1000
+const ZOMBIE_SPAWN_COLLISION_RADIUS := 34.0
 
 @onready var players_node: Node2D = $Players
 @onready var zombies_node: Node2D = $Zombies
@@ -48,6 +52,10 @@ const ENCOUNTER_JOIN_RADIUS := 200.0
 @onready var warehouse_spawn_points_node: Node = get_node_or_null("WarehouseSpawnPoints")
 @onready var healing_areas_node: Node = get_node_or_null("HealingAreas")
 @onready var encounters_node: Node = get_node_or_null("Encounters")
+@onready var obstacles_node: Node = get_node_or_null("Obstacles")
+@onready var terrain_node: Node2D = get_node_or_null("terrain")
+@onready var bushes_node: Node2D = get_node_or_null("bushes")
+@onready var fences_node: Node2D = get_node_or_null("fences")
 
 var players: Array = []
 var zombies: Array = []
@@ -96,7 +104,6 @@ var trade_player_list: HBoxContainer
 var pending_trade_offer: Dictionary = {}
 
 func _ready() -> void:
-	print_tree_pretty()
 	rng.randomize()
 	if GameData.players.is_empty():
 		GameData.build_players()
@@ -426,11 +433,9 @@ func _get_nearby_attackable_player(attacker):
 	for player in players:
 		if player == null or not is_instance_valid(player) or not player.visible or player == attacker:
 			continue
-		if not attacker.is_zombified and not player.is_zombified:
+		if not _can_players_pvp(attacker, player):
 			continue
-		if attacker.is_zombified and player.is_zombified:
-			continue
-		if attacker.global_position.distance_to(player.global_position) <= PLAYER_TOUCH_DISTANCE:
+		if _players_are_overlapping_for_pvp(attacker, player):
 			return player
 	return null
 
@@ -447,14 +452,35 @@ func _get_overlapping_pvp_target(active_player):
 			continue
 		if other_player == active_player or not other_player.visible:
 			continue
-		# Humans cannot fight humans. Zombified players can fight humans, and humans can fight zombified players.
-		if not active_player.is_zombified and not other_player.is_zombified:
+		if not _can_players_pvp(active_player, other_player):
 			continue
-		if active_player.is_zombified and other_player.is_zombified:
-			continue
-		if active_player.global_position.distance_to(other_player.global_position) <= PLAYER_TOUCH_DISTANCE:
+		if _players_are_overlapping_for_pvp(active_player, other_player):
 			return other_player
 	return null
+
+
+func _can_players_pvp(a, b) -> bool:
+	if a == null or b == null:
+		return false
+
+	# Humans cannot fight humans. Zombified players can fight humans, and humans can fight zombified players.
+	if not a.is_zombified and not b.is_zombified:
+		return false
+
+	# Zombified players do not fight each other for now.
+	if a.is_zombified and b.is_zombified:
+		return false
+
+	return true
+
+
+func _players_are_overlapping_for_pvp(a, b) -> bool:
+	var allowed_distance := PVP_OVERLAP_DISTANCE
+
+	if "base_collision_radius" in a and "base_collision_radius" in b:
+		allowed_distance = max(PVP_OVERLAP_DISTANCE, float(a.base_collision_radius) + float(b.base_collision_radius))
+
+	return a.global_position.distance_to(b.global_position) <= allowed_distance
 
 func _pull_nearby_zombies_into_encounters() -> void:
 	_cleanup_zombie_array()
@@ -909,7 +935,7 @@ func _is_inside_any_player_radius(pos: Vector2) -> bool:
 	return false
 
 func _position_overlaps_existing_collision(pos: Vector2) -> bool:
-	for collection in [players, zombies, items, dungeon_entrances]:
+	for collection in [players, zombies, items, dungeon_entrances, warehouse_entrances]:
 		for entry in collection:
 			if entry == null or not is_instance_valid(entry):
 				continue
@@ -917,7 +943,66 @@ func _position_overlaps_existing_collision(pos: Vector2) -> bool:
 				continue
 			if pos.distance_to(entry.global_position) < ENTITY_OVERLAP_DISTANCE:
 				return true
+
+	if _position_overlaps_obstacle_collision(pos, ZOMBIE_SPAWN_COLLISION_RADIUS):
+		return true
+
 	return false
+
+
+func _position_overlaps_obstacle_collision(pos: Vector2, radius: float) -> bool:
+	if obstacles_node == null:
+		return false
+
+	return _node_tree_collision_contains_point(obstacles_node, pos, radius)
+
+
+func _node_tree_collision_contains_point(node: Node, pos: Vector2, radius: float) -> bool:
+	for child in node.get_children():
+		if child is CollisionShape2D:
+			if _collision_shape_contains_world_point(child, pos, radius):
+				return true
+		elif child is CollisionPolygon2D:
+			if _collision_polygon_contains_world_point(child, pos):
+				return true
+
+		if _node_tree_collision_contains_point(child, pos, radius):
+			return true
+
+	return false
+
+
+func _collision_shape_contains_world_point(collision: CollisionShape2D, pos: Vector2, radius: float) -> bool:
+	if collision == null or collision.disabled or collision.shape == null:
+		return false
+
+	var local_pos := collision.to_local(pos)
+
+	if collision.shape is CircleShape2D:
+		var shape := collision.shape as CircleShape2D
+		return local_pos.length() <= shape.radius + radius
+
+	if collision.shape is RectangleShape2D:
+		var shape := collision.shape as RectangleShape2D
+		var half := shape.size * 0.5
+		return abs(local_pos.x) <= half.x + radius and abs(local_pos.y) <= half.y + radius
+
+	if collision.shape is CapsuleShape2D:
+		var shape := collision.shape as CapsuleShape2D
+		var half_height = max((shape.height * 0.5) - shape.radius, 0.0)
+		var clamped_y = clamp(local_pos.y, -half_height, half_height)
+		var closest := Vector2(0.0, clamped_y)
+		return local_pos.distance_to(closest) <= shape.radius + radius
+
+	return false
+
+
+func _collision_polygon_contains_world_point(collision: CollisionPolygon2D, pos: Vector2) -> bool:
+	if collision == null or collision.disabled:
+		return false
+
+	var local_pos := collision.to_local(pos)
+	return Geometry2D.is_point_in_polygon(local_pos, collision.polygon)
 
 func _respawn_items() -> void:
 	for item in items:
@@ -1132,8 +1217,8 @@ func _draw() -> void:
 
 	for child in healing_areas_node.get_children():
 		if child is Node2D:
-			draw_circle(child.global_position, HEALING_AREA_RADIUS, Color(1.0, 0.0, 0.0, 0.18))
-			draw_arc(child.global_position, HEALING_AREA_RADIUS, 0.0, TAU, 64, Color(1.0, 0.337, 0.271, 0.639), 2.0)
+			draw_circle(child.global_position, HEALING_AREA_RADIUS, Color(0.846, 0.296, 0.594, 0.18))
+			draw_arc(child.global_position, HEALING_AREA_RADIUS, 0.0, TAU, 64, Color(0.908, 0.378, 0.659, 0.639), 2.0)
 
 func _spawn_warehouse_entrances_from_points() -> void:
 	if warehouse_entrances_node == null:
@@ -1310,9 +1395,15 @@ func _ensure_inventory_ui() -> void:
 	title.text = "Inventory"
 	root.add_child(title)
 
+	var inventory_scroll := ScrollContainer.new()
+	inventory_scroll.name = "InventoryScroll"
+	inventory_scroll.custom_minimum_size = Vector2(680, 92)
+	root.add_child(inventory_scroll)
+
 	inventory_item_list = HBoxContainer.new()
 	inventory_item_list.name = "ItemList"
-	root.add_child(inventory_item_list)
+	inventory_item_list.custom_minimum_size = Vector2(680, 72)
+	inventory_scroll.add_child(inventory_item_list)
 
 	inventory_name_label = Label.new()
 	inventory_name_label.text = "Select an item."
@@ -1429,7 +1520,7 @@ func _refresh_trade_panel() -> void:
 		if player == null or not is_instance_valid(player) or not player.visible or player == current_player:
 			continue
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(58, 58)
+		button.size = Vector2(58, 58)
 		button.icon = _get_player_portrait_texture(player.character_id)
 		button.text = "P%d" % player.player_id
 		button.disabled = not (_is_player_in_warehouse(current_player) and _is_player_in_warehouse(player))
@@ -1470,20 +1561,40 @@ func _is_player_in_warehouse(player) -> bool:
 	return player != null and is_instance_valid(player) and player.is_in_dungeon and player.current_dungeon_id == "warehouse"
 
 func _update_depth_sorting() -> void:
+	_force_background_layers_back()
+
 	for collection in [players, zombies, items, dungeon_entrances, warehouse_entrances]:
 		for node in collection:
 			if node != null and is_instance_valid(node) and node is Node2D:
-				node.z_index = int(node.global_position.y)
-	var obstacles_node := get_node_or_null("Obstacles")
+				node.z_index = _depth_z_for_node(node)
+
 	if obstacles_node != null:
 		_apply_depth_sort_to_children(obstacles_node)
+
 	if active_dungeon_holder != null:
-		active_dungeon_holder.z_index = 0
+		active_dungeon_holder.z_index = DEPTH_Z_OFFSET
+
+
+func _force_background_layers_back() -> void:
+	for node in [terrain_node, bushes_node, fences_node]:
+		if node != null and is_instance_valid(node):
+			node.z_as_relative = false
+			node.z_index = BACKGROUND_Z_INDEX
+
+
+func _depth_z_for_node(node: Node2D) -> int:
+	var raw_z := int(node.global_position.y * 0.25) + 1000
+	return clamp(raw_z, -4096, 4096)
+
 
 func _apply_depth_sort_to_children(parent: Node) -> void:
 	for child in parent.get_children():
+		if child is CollisionShape2D or child is CollisionPolygon2D:
+			continue
+
 		if child is Node2D:
-			child.z_index = int(child.global_position.y)
+			child.z_index = _depth_z_for_node(child)
+
 		_apply_depth_sort_to_children(child)
 
 func _ensure_battle_portraits() -> void:

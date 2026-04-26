@@ -64,7 +64,6 @@ var stretch_return_speed: float = 6.0
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 func _ready() -> void:
-	print_tree_pretty()
 	target_position = global_position
 	var shape := collision_shape.shape as CircleShape2D
 	if shape != null:

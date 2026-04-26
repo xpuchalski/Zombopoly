@@ -19,7 +19,6 @@ var idle_pulse_amount: float = 0.06
 
 
 func _ready() -> void:
-	print_tree_pretty()
 	_apply_map_sprite_scale()
 
 func _process(delta: float) -> void:
@@ -28,7 +27,7 @@ func _process(delta: float) -> void:
 	var pulse_x := 1.0 - sin(visual_time * idle_pulse_speed) * idle_pulse_amount * 0.4
 	if sprite != null:
 		sprite.scale = Vector2(MAP_SPRITE_SCALE.x * pulse_x, MAP_SPRITE_SCALE.y * pulse_y)
-	z_index = int(global_position.y)
+	z_index = 1000 + int(global_position.y)
 
 
 func setup(id: int, type_name: String = "walker") -> void:

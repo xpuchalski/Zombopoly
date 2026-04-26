@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://byjqarf73mnd2"]
 
 [ext_resource type="Script" uid="uid://mp6gj015d3lu" path="res://scripts/main_menu.gd" id="1_2ihcw"]
+[ext_resource type="Texture2D" uid="uid://dr6m0ly4trkqj" path="res://assets/title.png" id="2_bqojv"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bqojv"]
+load_path = "res://.godot/imported/howto.png-bbcf7e433bbfac50735e997344d4c457.ctex"
 
 [node name="MainMenu_tscn" type="Control" unique_id=1567350750]
 layout_mode = 3
@@ -13,50 +17,160 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2ihcw")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1256456858]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=776649404]
+layout_mode = 0
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+texture = ExtResource("2_bqojv")
+
+[node name="MainMenuPanel" type="Panel" parent="." unique_id=646705170]
+layout_mode = 0
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="CenterContainer" type="CenterContainer" parent="MainMenuPanel" unique_id=1256456858]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -64.0
-offset_right = 48.0
-offset_bottom = 64.0
+offset_left = -71.5
+offset_top = -105.5
+offset_right = 31.5
+offset_bottom = 65.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=2000570666]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuPanel/CenterContainer" unique_id=2000570666]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1030913332]
-layout_mode = 2
-text = "Zombopoly"
-
-[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1927213036]
+[node name="StartButton" type="Button" parent="MainMenuPanel/CenterContainer/VBoxContainer" unique_id=1927213036]
 layout_mode = 2
 text = "Start Game"
 
-[node name="OptionsButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1322445226]
-layout_mode = 2
-text = "Options"
-
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1632406574]
+[node name="HowToPlayButton" type="Button" parent="MainMenuPanel/CenterContainer/VBoxContainer" unique_id=1632406574]
 layout_mode = 2
 text = "How To Play"
 
-[node name="Button2" type="Button" parent="CenterContainer/VBoxContainer" unique_id=845035277]
+[node name="LoreButton" type="Button" parent="MainMenuPanel/CenterContainer/VBoxContainer" unique_id=845035277]
 layout_mode = 2
 text = "Lore"
 
-[node name="ExitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=340945920]
+[node name="ExitButton" type="Button" parent="MainMenuPanel/CenterContainer/VBoxContainer" unique_id=340945920]
 layout_mode = 2
 text = "Exit"
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=776649404]
+[node name="Title" type="Label" parent="MainMenuPanel" unique_id=1030913332]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -161.0
+offset_right = -65.0
+offset_bottom = -138.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+text = "Zombopoly"
+horizontal_alignment = 1
+
+[node name="LorePanel" type="Panel" parent="." unique_id=1346820058]
+visible = false
 layout_mode = 0
 offset_left = -640.0
 offset_top = -360.0
-offset_right = -600.0
-offset_bottom = -320.0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="BackButton" type="Button" parent="LorePanel" unique_id=1935938289]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Back
+"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LorePanel" unique_id=1417003703]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 101.0
+offset_right = 1184.0
+offset_bottom = 577.0
+
+[node name="Label" type="Label" parent="LorePanel/ScrollContainer" unique_id=1798039268]
+layout_mode = 2
+text = "I like that idea. Narritively, the order of who arrives first should be established. everybody should be beat up, nobody should be notably stronger than anyone else. This represents everyone at the beginning of the game without any overpowered items. Kyra and Rhea need to arrive first. no self respecting person would ever let a zombie room with them during the zombie apocalypse. Jun arrives after them, absolutely covered head to toe in blood. Vex is probably already there after them, but hiding and observing. Then Nova, who shows up, thinks kyra is funny, and establishes that rhea is safe to be around for everyone else. Ember and Astrea show up at the same time and bicker with each other. shortly after Hina coldly shows up, acting just like hk416 from girls frontline. Then Vex reveals herself, coming in with Penny in tow, having brought her along to this safe place. Then they get to know each other as we do some environmental storytelling, it's an abandoned warehouse by the waterfront. with a bridge to a city in the distance, fires visible from across the wide river, but it's comparatively safe in their town.
+
+They establish a strike group who goes out to scavenge and explore the town for loot while the rest stay home, 3-4 people, just like the game. I think logically it would be ember, astrea, vex, and hina. Those 4 would definitely hate each other, but they're probably the stronges early game units, so. we could show how some of their scavenging missions go, I think astrea, hina and ember would start to relly like each other over time, but vex would keep them all from killing each other at the beginning, but while they grow close without her it would make more sense for vex to fall out of that friend group and for her to become closer to Nova instead. becasue they have such massively different personalities. 
+
+no, rhea does not attack humans. zombies pathologically need to infect humans, she does not. she doesn't even really need food, she still just likes the taste. I do like the idea that ember is going to take damage outside on a smoke break and rhea just wallops a zombie nearby, like so hard that it flies over the fence. Rhea doesn't need validation, she's strong so she doesnt care if someone doesn't trust her, that's just the kind of person she is, she'll like you if she decided she likes you, she doesn't need you to like her back. 
+
+
+I think that the questing lineup would definitely change like 10 days or so later, astrea and hina would probably calm down and warm up to each other, choosing to stay at home, ember would still have a hard time sitting still at home though, maybe not quite accepting that she now has friends? I can see vex wanting to rest, being the most realistic, so she stays as well. if i were nova, i would get antsy and want to go out, so i would go out on expeditions with ember. Ember would also finally allow Kira and rhea to come, but she would need a narritive reason to trust them. as an aside, vex intentionally does not have poision in game, this is because it's a ridiculous assertion that she would be able to poision a zombie, something that is literally already dead and rotting. Also nova definitely treats going out as a time to test her experimental weapons. Kyra can't revive things, but she probably would try to talk to the zombies because she's a lonely introverted extrovert at heart. 
+
+Over that time, I think I've given narritive reasoning behind kyra and rhea's relationship, also the trifecta of ember, hina, and astrea, also nova would probably love jun, who would have been constnatly enjoying her interactions with the rest of the human crowd the whole time. while vex was staying back from expeditions, i can see penny warming to her because she brought her to the warehosue in the first place, also she would probably try to convince vex that her sugar pills would cure the poison. the warehouse would be more comfortable by that point, windows broken open for fresh air, a fresh water system designed by nova and jun, functioning electricity, also courtosey of the two. There would be aestetic lamps and furniture, brought back by the strong hina and astrea, at penny's request. there would probably also be an area for rhea and hina to spar in, i can imagine i would also have a lot of pent up physicality if i were them. ember would have a torn up area outside, fenced in where she can go for a smoke break. Vex woud probably sleep in a hammock tied to the rafters. 
+
+I like that, so Hina and astrea decide to go out with ember, jun comes too this time. they see a girl running away, so they pursue her and astrea shoots at the zombies to get their attention, but they maul the girl. I was going to have 10 characters originally, the color im missing is brown, and the 10th would have been an archeologist, but I couldn't think of how she would work mechanically. so we would describe how the girl looks, then she gets mauled. Astrea and ember would start clearing out the zombies, hina would probably just go \"damn\" or something and brutally demolish the zombified girl. they return and jun would recreate what happened, penny would wince, kyra would be flabberghasted, because she had been going out, but she would also start thinking about if she were there, because she can revive players in game, so it would be an illusion to that.
+
+they go out on a normal expedition after that, ember (obviously), kyra, rhea, and this time, penny, and while they explore nearby the bridge, penny longs for the city, she used to live there, but she notices the hoard across the bridge, so many that they're spilling out of the bridge, and she can vaguely see big ones, huge ones. she gets intimidated and calls the others, who comes, and for the first time ember really feels panicked. 
+
+they return and everybody gears up, they're all very much equipped to deal with enemies by now, but they're intimidated, are they really ready for that boss yet? they conversate around a fire and seem relaxed, but they all go to sleep with equipment on, and they're horrified. 
+
+that ember reasoning also doesn't work. I feel like what i've been building up to is different. Ember is the only one with a place for only her, her outdoors smoking area, and she's also the only one whose never once stayed at the warehouse from an expedition. I feel like this impending feeling of doom from a boss is a great time to force her to stay inside and be not moving for the first time. she comes down early in the morning and blasts the building's established fireplace, shooting a vortex of flame from the floor all the way to the ceiling, looking at the blaze unamused as the heat from it threatens to light an unlit cigarette she chews out of habit. people come outside of their rooms, but they enjoy the warmth, and ember notices this and smiles to herself. she collects a camping chair someone like astrea found on an expedition and sits by the fire and waits for people to collect, putting a kettle of coffee over the flame. she muses to herself as the rest gather round and pour coffee from the (now heat-warped) pot. Kyra and penny thank her for the coffee, hina jokingly says she's never seen ember make a fire that big on an expedition. ember talks and jokes with the rest of them and genuinely has a good time, and she realizes this, that she's found actual friends
+
+I think after that I have a zombie tank like throw a car through the front gate or something, everyone sprints out instantly, geared to the teeth, but ember gets killed by a zombie instantly. from her perspective, she's just suspended in a void, like a scene from a magical girl anime where it has to get sad and serious all of a sudden. she just sighs and kicks air, reaching for her cigs. But as she raises one to her mouth to light, she throws the box as far into the void as she possibly can and roars into the blackness, kicking and screaming and crying and throwing a fit. she weeps out the names of her friends and maons the nice things they did for her and chokes out how despicable she is for dying right there. after 5 or 6 minutes she runs out of the energy to kick and scream and just floats there dispondantly, but when she closes her eyes she feels incredible pain, sharp and like her intestines were ripped out, she opens her eyes and coughs and sits up immediatly. Everyone cheeers, kyra holding embers face telling her good morning, astrea asks her if she's alright, she's looking a little green, everyone laughs. Even jun is smiling and chuckling behind closed and bloodied fists. actually, everyone loocks super fucked up and bloodied, but not their own blood, zombie bloodd. hina stares daggers at ember, though through the fustration ember can tell shes holding back tears, hina says she can't believe ember almost died to that whelp of a boss. Ember looks super confused, because she did die. obviously, jun chimes in. She fills ember in on how kyra has been trying to convince everyone that she can revive zombies almost every day, but ember never heard her schpeal because she was always out. as soon as ember fell, everyone immediately gave kyra that go-ahead to work her 'magic' on ember. even though ember did get up as a zombie, kyra punched her unconscious, and then brought her back to life somehow. ember exclaims how, but jun just shrugs and shows her fists, wordless-ly saying that she was fighting that whole time. so ember just cries and laughs and weeps, not knowing how to feel at all. and she says she loves them all. i feel like that's a good ending.
+
+i want to expand on some parts. so this would take place from first person perspective from ember's perspective as serious as the core of what i've been discussing is, that's just it, the core. the back stories with all their hilarity is the meat on those bones. ember lighting shit on fire, astrea being confounded by the world, hina being generally cold and quick to flawless action, nova being a lose cannon, penny trying to heal everyone and be brave, vex being brooding, rhea being just a normal tough girl but green, kyra being genuinely delusional, and jun loving every moment of it, that's the rest of the story. also i want to have a moment where penny questions if they should move into the city, tougher but better loot, maybe safer long term, but silently everyone agrees that the safehouse is home. also, just everything needs to be expanded upon.
+
+
+"
+
+[node name="HowToPlayPanel" type="Panel" parent="." unique_id=1114270035]
+visible = false
+layout_mode = 0
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="BackButton" type="Button" parent="HowToPlayPanel" unique_id=1249427030]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Back
+"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HowToPlayPanel" unique_id=164183210]
+layout_mode = 0
+offset_right = 1908.0
+offset_bottom = 1280.0
+scale = Vector2(0.6, 0.6)
+horizontal_scroll_mode = 0
+
+[node name="TextureRect2" type="TextureRect" parent="HowToPlayPanel/ScrollContainer" unique_id=672710446]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = SubResource("CompressedTexture2D_bqojv")

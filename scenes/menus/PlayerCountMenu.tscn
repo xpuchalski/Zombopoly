@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://htpjh24hylci"]
 
 [ext_resource type="Script" uid="uid://di5tpf7qblfqk" path="res://scripts/player_count_menu.gd" id="1_p01fw"]
+[ext_resource type="Texture2D" uid="uid://dr6m0ly4trkqj" path="res://assets/title.png" id="2_iraxc"]
 
 [node name="PlayerCountMenu_tscn" type="Control" unique_id=896523908]
 layout_mode = 3
@@ -12,6 +13,14 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p01fw")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1811432714]
+layout_mode = 0
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+texture = ExtResource("2_iraxc")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1996437515]
 layout_mode = 1
